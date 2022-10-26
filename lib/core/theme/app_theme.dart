@@ -6,9 +6,9 @@ class AppTheme {
   static final darkTheme = ThemeData(
       fontFamily: playFairDisplayFont,
       scaffoldBackgroundColor: Colors.black.withAlpha(225),
-      expansionTileTheme: const ExpansionTileThemeData(
-        iconColor: Colors.yellow,
-        textColor: Colors.yellow,
+      expansionTileTheme: ExpansionTileThemeData(
+        iconColor: Colors.greenAccent.shade400,
+        textColor: Colors.greenAccent.shade400,
         tilePadding: EdgeInsets.zero,
       ),
       iconTheme: const IconThemeData(
@@ -16,13 +16,13 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.yellow,
-          side: const BorderSide(
-            color: Colors.yellow,
+          foregroundColor: Colors.greenAccent.shade400,
+          side: BorderSide(
+            color: Colors.greenAccent.shade400,
           ),
         ),
       ),
-      colorScheme: const ColorScheme.dark(
-        secondary: Colors.yellow,
+      colorScheme: ColorScheme.dark(
+        secondary: Colors.greenAccent.shade400,
       ));
 }

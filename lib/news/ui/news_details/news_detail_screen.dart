@@ -1,9 +1,9 @@
-import 'package:green_mode/core/ui/add_vertical_space.dart';
-import 'package:green_mode/core/ui/screen_container.dart';
-import 'package:green_mode/core/ui/themed_divider.dart';
-import 'package:green_mode/core/ui/themed_expansion_tile.dart';
-import 'package:green_mode/core/ui/themed_scrollbar.dart';
-import 'package:green_mode/core/ui/widget_constants.dart';
+import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/screen_container.dart';
+import 'package:green_mode/core/common_widgets/themed_divider.dart';
+import 'package:green_mode/core/common_widgets/themed_expansion_tile.dart';
+import 'package:green_mode/core/common_widgets/themed_scrollbar.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/news/data/models/news.dart';
 import 'package:green_mode/news/data/util/news_util.dart';
 import 'package:green_mode/news/ui/news_details/helper_widgets/news_content.dart';

@@ -1,6 +1,6 @@
-import 'package:green_mode/core/routing/router.dart';
-import 'package:green_mode/core/ui/add_vertical_space.dart';
-import 'package:green_mode/core/ui/widget_constants.dart';
+import 'package:green_mode/core/routing/app_router.dart';
+import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/news/data/models/news.dart';
 import 'package:green_mode/news/data/news_providers.dart';
 import 'package:flutter/material.dart';

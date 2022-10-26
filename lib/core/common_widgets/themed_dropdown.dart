@@ -1,5 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:green_mode/core/ui/widget_constants.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:flutter/material.dart';
 
 class ThemedDropdown<T> extends StatelessWidget {

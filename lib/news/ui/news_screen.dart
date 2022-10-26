@@ -1,11 +1,15 @@
-import 'package:green_mode/core/ui/add_horizontal_space.dart';
-import 'package:green_mode/core/ui/screen_container.dart';
-import 'package:green_mode/core/ui/themed_divider.dart';
-import 'package:green_mode/core/ui/themed_dropdown.dart';
-import 'package:green_mode/core/ui/widget_constants.dart';
+
+import 'package:green_mode/core/common_widgets/add_horizontal_space.dart';
+import 'package:green_mode/core/common_widgets/screen_container.dart';
+import 'package:green_mode/core/common_widgets/screen_title.dart';
+import 'package:green_mode/core/common_widgets/themed_divider.dart';
+import 'package:green_mode/core/common_widgets/themed_dropdown.dart';
+import 'package:green_mode/core/constants/text_constants.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
+import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/news/data/constants/news_category.dart';
 import 'package:green_mode/news/data/news_providers.dart';
-import 'package:green_mode/news/ui/news_list/helper_widgets/news_list_screen.dart';
+import 'package:green_mode/news/ui/news_list/news_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +22,7 @@ class NewsScreen extends ConsumerWidget {
     return ScreenContainer(
       child: Column(
         children: [
-          headingRow(),
+          headingRow(context),
           const ThemedDivider(),
           categoryRow(ref, selectedNewsCategory),
           const ThemedDivider(),
@@ -28,17 +32,19 @@ class NewsScreen extends ConsumerWidget {
     );
   }
 
-  Row headingRow() {
+  Row headingRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "NEWS",
-          style: WidgetConstants.headingTextStyle,
-        ),
+        const ScreenTitle(title: TextConstants.news),
         IconButton(
           icon: const Icon(Icons.menu_outlined),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              AppRouter.appsMenuScreen(context),
+            );
+          },
         ),
       ],
     );

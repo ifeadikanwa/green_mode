@@ -1,9 +1,9 @@
-import 'package:green_mode/core/ui/add_vertical_space.dart';
-import 'package:green_mode/core/ui/loading_indicator.dart';
-import 'package:green_mode/core/ui/themed_divider.dart';
-import 'package:green_mode/core/ui/themed_scrollbar.dart';
+import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/loading_indicator.dart';
+import 'package:green_mode/core/common_widgets/themed_divider.dart';
+import 'package:green_mode/core/common_widgets/themed_scrollbar.dart';
 import 'package:green_mode/news/data/news_providers.dart';
-import 'package:green_mode/news/ui/news_list/helper_widgets/news_list_item.dart';
+import 'package:green_mode/news/ui/news_list/news_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

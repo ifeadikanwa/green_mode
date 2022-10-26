@@ -1,5 +1,5 @@
-import 'package:green_mode/core/ui/loading_indicator.dart';
-import 'package:green_mode/core/ui/widget_constants.dart';
+import 'package:green_mode/core/common_widgets/loading_indicator.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/news/data/news_providers.dart';
 import 'package:green_mode/news/data/util/news_util.dart';
 import 'package:flutter/material.dart';
