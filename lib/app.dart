@@ -1,6 +1,5 @@
 import 'package:green_mode/core/theme/app_theme.dart';
 import 'package:green_mode/core/ui/main_menu_screen.dart';
-import 'package:green_mode/news/ui/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

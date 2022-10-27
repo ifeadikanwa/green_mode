@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.green_mode">
+    package="com.example.green_mode"
+    xmlns:tools="http://schemas.android.com/tools"> 
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
    <application
+        tools:replace="android:label"
         android:label="Green Mode"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
