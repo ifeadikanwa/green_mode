@@ -1,4 +1,5 @@
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/inner_screen_app_bar.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
 import 'package:green_mode/core/common_widgets/themed_expansion_tile.dart';
@@ -23,13 +24,7 @@ class NewsDetailScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //bar
-          IconButton(
-            icon: const Icon(Icons.arrow_back_outlined),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          const ThemedDivider(),
+          const InnerScreenAppBar(),
 
           //scrollable news details
           Expanded(

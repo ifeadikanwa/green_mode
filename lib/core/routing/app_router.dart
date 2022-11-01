@@ -4,6 +4,9 @@ import 'package:green_mode/core/constants/sub_app.dart';
 import 'package:green_mode/core/core_providers.dart';
 import 'package:green_mode/core/ui/apps_menu_screen.dart';
 import 'package:green_mode/core/ui/main_menu_screen.dart';
+import 'package:green_mode/green_do/data/activity.dart';
+import 'package:green_mode/green_do/ui/green_do_screen.dart';
+import 'package:green_mode/green_do/ui/helper_widgets/activity_details/activity_details_screen.dart';
 import 'package:green_mode/news/data/models/news.dart';
 import 'package:green_mode/news/ui/news_details/news_detail_screen.dart';
 import 'package:green_mode/news/ui/news_screen.dart';
@@ -29,10 +32,19 @@ class AppRouter {
       MaterialPageRoute(builder: (context) => NewsDetailScreen(news: news));
 
   //call
-  static MaterialPageRoute callScren(BuildContext context, WidgetRef ref) {
+  static MaterialPageRoute callScreen(BuildContext context, WidgetRef ref) {
     ref.read(currentSubAppLocationProvider.notifier).state = SubApp.call;
     return MaterialPageRoute(builder: (context) => const CallScreen());
   }
+
+  //green do
+  static MaterialPageRoute greenDoScreen(BuildContext context, WidgetRef ref) {
+    ref.read(currentSubAppLocationProvider.notifier).state = SubApp.greenDo;
+    return MaterialPageRoute(builder: (context) => const GreenDoScreen());
+  }
+
+  static MaterialPageRoute activityDetailScreen(BuildContext context, Activity activity) =>
+      MaterialPageRoute(builder: (context) => ActivityDetailsScreen(activity: activity));
 
   static void pushAndRemoveEveryOtherScreen(
     BuildContext context,
@@ -45,7 +57,7 @@ class AppRouter {
     );
   }
 
-   static void pushAndRemoveTillMainMenuScreen(
+  static void pushAndRemoveTillMainMenuScreen(
     BuildContext context,
     MaterialPageRoute newRoute,
   ) {

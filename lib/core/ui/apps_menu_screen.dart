@@ -78,10 +78,24 @@ class AppsMenuScreen extends ConsumerWidget {
                   optionAction: () {
                     AppRouter.pushAndRemoveTillMainMenuScreen(
                       context,
-                      AppRouter.callScren(context, ref),
+                      AppRouter.callScreen(context, ref),
                     );
                   },
                   isCurrentLocation: currentSubAppLocation == SubApp.call,
+                ),
+
+                //green do
+                const AddVerticalSpace(
+                    height: WidgetConstants.appMenuOptionsSpacing),
+                AppMenuOption(
+                  optionName: TextConstants.greenDo,
+                  optionAction: () {
+                    AppRouter.pushAndRemoveTillMainMenuScreen(
+                      context,
+                      AppRouter.greenDoScreen(context, ref),
+                    );
+                  },
+                  isCurrentLocation: currentSubAppLocation == SubApp.greenDo,
                 ),
 
                 //

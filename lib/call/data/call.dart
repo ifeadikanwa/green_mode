@@ -5,7 +5,7 @@ import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:uuid/uuid.dart';
 
 class Call {
-  static void joinCall(WidgetRef ref) async {
+  static Future<void> joinCall(WidgetRef ref) async {
     try {
       final Map<FeatureFlagEnum, bool> featureFlags = {
         FeatureFlagEnum.CALL_INTEGRATION_ENABLED: false,

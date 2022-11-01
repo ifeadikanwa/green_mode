@@ -5,14 +5,16 @@ class WidgetConstants {
   //sizes
   static const double defaultTextSize = 14.0;
   static const double appMenuOptionsSpacing = 14.0;
+  static const double defaultVerticalWidgetSpacing = 16.0;
 
   //text
   static const dropdownDefaultTextStyle =
-      TextStyle(fontFamily: AppTheme.playFairDisplayFont, fontSize: 20.0);
+      TextStyle(fontFamily: AppTheme.appFont, fontSize: 20.0);
 
   static const headingTextStyle = TextStyle(fontSize: 36.0);
 
   static const subHeadingTextStyle = TextStyle(fontSize: 20.0);
+
 
   static const newsListTitleTextStyle = TextStyle(
     fontWeight: FontWeight.bold,

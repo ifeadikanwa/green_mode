@@ -6,4 +6,5 @@ class TextConstants {
   //sub apps
   static const news = "News";
   static const call = "Call";
+  static const greenDo = "Green Do";
 }
