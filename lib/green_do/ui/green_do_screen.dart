@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
+import 'package:green_mode/core/common_widgets/search_bar.dart';
 import 'package:green_mode/core/common_widgets/sub_app_bar.dart';
 import 'package:green_mode/core/constants/text_constants.dart';
 import 'package:green_mode/green_do/ui/helper_widgets/activity_list/activity_list_screen.dart';
@@ -27,24 +28,9 @@ class _GreenDoScreenState extends State<GreenDoScreen> {
         const SubAppBar(title: TextConstants.greenDo),
 
         //search bar
-        TextField(
-          readOnly: true,
-          onTap: () => showSearch(
-            context: context,
-            delegate: ActivitySearchDelegate(),
-          ),
-          decoration: InputDecoration(
-            hintText: "Find an activity",
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.white.withOpacity(0.5),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ),
-          ),
+        SearchBar(
+          searchHint: "Find an activity",
+          searchDelegate: ActivitySearchDelegate(),
         ),
 
         //activities

@@ -7,4 +7,5 @@ class TextConstants {
   static const news = "News";
   static const call = "Call";
   static const greenDo = "Green Do";
+  static const podcast = "Podcast";
 }

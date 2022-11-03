@@ -49,6 +49,9 @@ dependencies:
   cached_network_image: ^3.2.2
   jitsi_meet: ^4.0.0
   uuid: ^3.0.6
+  podcast_search: ^0.5.1
+  just_audio: ^0.9.30
+  audio_video_progress_bar: ^0.11.0
 
 dev_dependencies:
   flutter_test:

@@ -19,10 +19,14 @@ class InnerScreenAppBar extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            Text(
-              title ?? "",
-              style: WidgetConstants.subHeadingTextStyle.copyWith(
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                title ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: WidgetConstants.subHeadingTextStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

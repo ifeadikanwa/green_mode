@@ -11,6 +11,8 @@ import 'package:green_mode/news/data/models/news.dart';
 import 'package:green_mode/news/ui/news_details/news_detail_screen.dart';
 import 'package:green_mode/news/ui/news_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:green_mode/podcast/ui/helper_widgets/podcast_details/podcast_details_screen.dart';
+import 'package:green_mode/podcast/ui/podcast_screen.dart';
 
 class AppRouter {
   //app
@@ -45,6 +47,15 @@ class AppRouter {
 
   static MaterialPageRoute activityDetailScreen(BuildContext context, Activity activity) =>
       MaterialPageRoute(builder: (context) => ActivityDetailsScreen(activity: activity));
+
+  //podcast
+  static MaterialPageRoute podcastScreen(BuildContext context, WidgetRef ref) {
+    ref.read(currentSubAppLocationProvider.notifier).state = SubApp.podcast;
+    return MaterialPageRoute(builder: (context) => const PodcastScreen());
+  }
+
+  static MaterialPageRoute podcastDetailScreen(BuildContext context, String podcastUrl) =>
+      MaterialPageRoute(builder: (context) => PodcastDetailsScreen(podcastUrl: podcastUrl));
 
   static void pushAndRemoveEveryOtherScreen(
     BuildContext context,

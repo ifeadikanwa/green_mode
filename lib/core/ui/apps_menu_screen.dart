@@ -98,6 +98,20 @@ class AppsMenuScreen extends ConsumerWidget {
                   isCurrentLocation: currentSubAppLocation == SubApp.greenDo,
                 ),
 
+                //podcast
+                const AddVerticalSpace(
+                    height: WidgetConstants.appMenuOptionsSpacing),
+                AppMenuOption(
+                  optionName: TextConstants.podcast,
+                  optionAction: () {
+                    AppRouter.pushAndRemoveTillMainMenuScreen(
+                      context,
+                      AppRouter.podcastScreen(context, ref),
+                    );
+                  },
+                  isCurrentLocation: currentSubAppLocation == SubApp.podcast,
+                ),
+
                 //
                 const AddVerticalSpace(
                     height: WidgetConstants.appMenuOptionsSpacing),

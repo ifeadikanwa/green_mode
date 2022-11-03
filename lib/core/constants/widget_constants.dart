@@ -14,9 +14,12 @@ class WidgetConstants {
   static const headingTextStyle = TextStyle(fontSize: 36.0);
 
   static const subHeadingTextStyle = TextStyle(fontSize: 20.0);
+  static const smallerSubHeadingTextStyle = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.bold,
+  );
 
-
-  static const newsListTitleTextStyle = TextStyle(
+  static const listItemTitleTextStyle = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 16.0,
   );

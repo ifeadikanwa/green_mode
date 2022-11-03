@@ -1,30 +1,27 @@
-import 'package:green_mode/core/routing/app_router.dart';
+import 'package:flutter/material.dart';
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
-import 'package:green_mode/news/data/models/news.dart';
-import 'package:green_mode/news/data/news_providers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:green_mode/news/data/util/news_util.dart';
+import 'package:green_mode/core/routing/app_router.dart';
+import 'package:podcast_search/podcast_search.dart';
 
-class NewsListItem extends ConsumerWidget {
-  final News news;
-  const NewsListItem({Key? key, required this.news}) : super(key: key);
+class PodcastListItem extends StatelessWidget {
+  final Item podcastItem;
+
+  const PodcastListItem({Key? key, required this.podcastItem})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return GestureDetector(
-      //on tap set news url and navigate
+      //on tap set podcast url and navigate
       onTap: () {
-        ref.read(contentUrlProvider.notifier).state = news.url;
-
         Navigator.push(
           context,
-          AppRouter.newsDetailScreen(context, news),
+          AppRouter.podcastDetailScreen(context, podcastItem.feedUrl ?? ""),
         );
       },
 
-      //padding surounding the news item column
+      //padding
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 12.0,
@@ -34,15 +31,15 @@ class NewsListItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              news.title,
+              podcastItem.trackName ?? "Untitled",
               softWrap: true,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: WidgetConstants.listItemTitleTextStyle,
             ),
             const AddVerticalSpace(height: 6.0),
             Text(
-              NewsUtil.getValidDescription(news.description),
+              podcastItem.artistName ?? "Unknown",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

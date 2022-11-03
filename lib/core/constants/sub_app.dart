@@ -3,4 +3,5 @@ enum SubApp {
   news,
   call,
   greenDo,
+  podcast,
 }
