@@ -10,6 +10,7 @@ import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/core/core_providers.dart';
 import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/core/ui/helper_widgets/app_menu_option.dart';
+import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/mini_podcast_player.dart';
 
 class AppsMenuScreen extends ConsumerWidget {
   const AppsMenuScreen({Key? key}) : super(key: key);
@@ -115,6 +116,7 @@ class AppsMenuScreen extends ConsumerWidget {
                 //
                 const AddVerticalSpace(
                     height: WidgetConstants.appMenuOptionsSpacing),
+                const MiniPodcastPlayer(),
               ],
             ),
           ),

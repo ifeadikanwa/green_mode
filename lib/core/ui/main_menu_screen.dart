@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/podcast_player_screen.dart';
+import 'package:green_mode/podcast/ui/podcast_screen.dart';
 import 'package:green_mode/test_ui.dart';
 
 class MainMenuScreen extends ConsumerWidget {
@@ -60,13 +61,7 @@ class MainMenuScreen extends ConsumerWidget {
         ),
         OutlinedButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const PodcastPlayerScreen(
-                          audioUrl:
-                              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-                        )));
+            Navigator.push(context, AppRouter.podcastScreen(context, ref));
           },
           child: const Text("PODCAST PLAYER"),
         ),

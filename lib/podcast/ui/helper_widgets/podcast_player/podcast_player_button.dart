@@ -1,4 +1,3 @@
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_mode/core/common_widgets/loading_indicator.dart';
@@ -6,34 +5,41 @@ import 'package:green_mode/podcast/data/podcast_player/audio_button_state.dart';
 import 'package:green_mode/podcast/data/podcast_providers.dart';
 
 class PodcastPlayerButton extends ConsumerWidget {
-  const PodcastPlayerButton({Key? key}) : super(key: key);
+  final Color? iconColor;
+  const PodcastPlayerButton({
+    Key? key,
+    this.iconColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final buttonState = ref.watch(audioButtonStateProvider);
-    final audioPlayer = ref.watch(audioPlayerNotifierProvider);
+    final audioPlayerManager = ref.watch(audioPlayerManagerProvider);
 
-    
-
-    switch (buttonState) {
+    switch (audioPlayerManager.audioButtonState) {
       case AudioButtonState.loading:
         return const LoadingIndicator();
-      case AudioButtonState.playing:
-        return IconButton(
-          icon: const Icon(Icons.play_arrow),
-          onPressed: () {
-            print("PLAY");
-            audioPlayer.pause();
-          },
-        );
       case AudioButtonState.paused:
         return IconButton(
-          icon: const Icon(Icons.pause),
+          icon: Icon(
+            Icons.play_arrow,
+            color: iconColor,
+          ),
           onPressed: () {
-            print("PAUSE");
-            audioPlayer.play();
+            audioPlayerManager.play();
           },
         );
+      case AudioButtonState.playing:
+        return IconButton(
+          icon: Icon(
+            Icons.pause,
+            color: iconColor,
+          ),
+          onPressed: () {
+            audioPlayerManager.pause();
+          },
+        );
+      default:
+        return const LoadingIndicator();
     }
   }
 }

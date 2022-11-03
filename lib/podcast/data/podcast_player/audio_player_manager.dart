@@ -3,30 +3,24 @@ import 'package:green_mode/podcast/data/podcast_player/audio_button_state.dart';
 import 'package:green_mode/podcast/data/podcast_player/audio_progress.dart';
 import 'package:just_audio/just_audio.dart';
 
-class AudioPlayerManager {
-  AudioPlayerManager({required String audioUrl}) {
-    _init(audioUrl);
+class AudioPlayerManager extends ChangeNotifier {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  AudioPlayerManager({required String? audioUrl}) {
+    if (audioUrl != null) {
+      _init(audioUrl);
+    }
   }
 
-
-
-  final progressNotifier = ValueNotifier<AudioProgress>(
-    const AudioProgress(
-      current: Duration.zero,
-      buffered: Duration.zero,
-      total: Duration.zero,
-    ),
+  AudioProgress audioProgress = const AudioProgress(
+    current: Duration.zero,
+    buffered: Duration.zero,
+    total: Duration.zero,
   );
 
-  final buttonNotifier =
-      ValueNotifier<AudioButtonState>(AudioButtonState.paused);
-
-
-
-  late AudioPlayer _audioPlayer;
+  AudioButtonState audioButtonState = AudioButtonState.paused;
 
   void _init(String audioUrl) async {
-    _audioPlayer = AudioPlayer();
     await _audioPlayer.setUrl(audioUrl);
 
     _audioPlayer.playerStateStream.listen((playerState) {
@@ -34,58 +28,65 @@ class AudioPlayerManager {
       final processingState = playerState.processingState;
       if (processingState == ProcessingState.loading ||
           processingState == ProcessingState.buffering) {
-        buttonNotifier.value = AudioButtonState.loading;
+        audioButtonState = AudioButtonState.loading;
+        notifyListeners();
       } else if (!isPlaying) {
-        buttonNotifier.value = AudioButtonState.paused;
+        audioButtonState = AudioButtonState.paused;
+        notifyListeners();
       } else if (processingState != ProcessingState.completed) {
-        buttonNotifier.value = AudioButtonState.playing;
+        audioButtonState = AudioButtonState.playing;
+        notifyListeners();
       } else {
         _audioPlayer.seek(Duration.zero);
         _audioPlayer.pause();
+        notifyListeners();
       }
     });
 
     _audioPlayer.positionStream.listen((position) {
-      final oldState = progressNotifier.value;
-      progressNotifier.value = AudioProgress(
+      audioProgress = audioProgress.copyWith(
         current: position,
-        buffered: oldState.buffered,
-        total: oldState.total,
       );
+      notifyListeners();
     });
 
     _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
-      final oldState = progressNotifier.value;
-      progressNotifier.value = AudioProgress(
-        current: oldState.current,
+      audioProgress = audioProgress.copyWith(
         buffered: bufferedPosition,
-        total: oldState.total,
       );
+      notifyListeners();
     });
 
     _audioPlayer.durationStream.listen((totalDuration) {
-      final oldState = progressNotifier.value;
-      progressNotifier.value = AudioProgress(
-        current: oldState.current,
-        buffered: oldState.buffered,
+      audioProgress = audioProgress.copyWith(
         total: totalDuration ?? Duration.zero,
       );
+      notifyListeners();
     });
   }
 
   void play() {
     _audioPlayer.play();
+    notifyListeners();
   }
 
   void pause() {
     _audioPlayer.pause();
+    notifyListeners();
+  }
+
+  void stop() {
+    _audioPlayer.stop();
+    notifyListeners();
   }
 
   void seek(Duration position) {
     _audioPlayer.seek(position);
+    notifyListeners();
   }
 
   void dispose() {
     _audioPlayer.dispose();
+    notifyListeners();
   }
 }

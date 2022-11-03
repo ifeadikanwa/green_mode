@@ -6,6 +6,7 @@ class AppTheme {
   static final darkTheme = ThemeData(
       fontFamily: appFont,
       scaffoldBackgroundColor: Colors.black.withAlpha(225),
+      primaryColor: Colors.greenAccent.shade400,
       expansionTileTheme: ExpansionTileThemeData(
         iconColor: Colors.greenAccent.shade400,
         textColor: Colors.greenAccent.shade400,
@@ -42,6 +43,7 @@ class AppTheme {
         iconColor: Colors.white,
       ),
       colorScheme: ColorScheme.dark(
+        primary: Colors.greenAccent.shade400,
         secondary: Colors.greenAccent.shade400,
       ));
 }

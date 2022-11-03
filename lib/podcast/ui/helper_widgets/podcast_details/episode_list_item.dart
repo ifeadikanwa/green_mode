@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:green_mode/core/routing/app_router.dart';
+import 'package:green_mode/podcast/data/podcast_providers.dart';
 import 'package:podcast_search/podcast_search.dart';
 
-class EpisodeListItem extends StatelessWidget {
+class EpisodeListItem extends ConsumerWidget {
   final Episode episode;
 
   const EpisodeListItem({Key? key, required this.episode}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       title: Text(
         episode.title,
@@ -18,7 +21,16 @@ class EpisodeListItem extends StatelessWidget {
       subtitle: (episode.duration != null)
           ? Text("${episode.duration!.inMinutes} min")
           : const Text("- min"),
-      trailing: const Icon(Icons.play_circle_outline),
+      trailing: IconButton(
+        onPressed: () {
+          ref.read(playingEpisodeProvider.notifier).state = episode;
+          Navigator.push(
+            context,
+            AppRouter.podcastPlayerScreen(context),
+          );
+        },
+        icon: Icon(Icons.play_circle_outline),
+      ),
     );
   }
 }

@@ -10,6 +10,7 @@ import 'package:green_mode/core/constants/text_constants.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/podcast/data/podcast_providers.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_list/podcast_list_screen.dart';
+import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/mini_podcast_player.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_search_delegate.dart';
 
 class PodcastScreen extends ConsumerWidget {
@@ -31,6 +32,10 @@ class PodcastScreen extends ConsumerWidget {
             searchHint: "Find a podcast",
             searchDelegate: PodcastSearchDelegate(ref: ref),
           ),
+
+          //player
+          const AddVerticalSpace(height: 2.0),
+          const MiniPodcastPlayer(),
 
           //download
           const AddVerticalSpace(height: 16.0),
