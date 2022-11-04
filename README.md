@@ -1,4 +1,4 @@
-# eco_mode
+# green_mode
 
 A new Flutter project.
 
