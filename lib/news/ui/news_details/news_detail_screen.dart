@@ -1,4 +1,5 @@
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/content_image_loader.dart';
 import 'package:green_mode/core/common_widgets/inner_screen_app_bar.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
@@ -50,12 +51,9 @@ class NewsDetailScreen extends ConsumerWidget {
                     const AddVerticalSpace(height: 8.0),
 
                     //image expansion tile
-                    (news.urlToImage != null)
-                        ? ThemedExpansionTile(
-                            tileTitle: "View image",
-                            imageUrl: news.urlToImage!,
-                          )
-                        : const SizedBox(),
+                    ContentImageLoader(
+                      imageUrl: news.urlToImage,
+                    ),
                     const AddVerticalSpace(height: 8.0),
 
                     //news text

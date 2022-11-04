@@ -8,6 +8,7 @@ import 'package:green_mode/core/common_widgets/sub_app_bar.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
 import 'package:green_mode/core/constants/text_constants.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
+import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/podcast/data/podcast_providers.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_list/podcast_list_screen.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/mini_podcast_player.dart';
@@ -40,7 +41,12 @@ class PodcastScreen extends ConsumerWidget {
           //download
           const AddVerticalSpace(height: 16.0),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                AppRouter.downloadScreen(context),
+              );
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

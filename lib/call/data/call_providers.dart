@@ -12,10 +12,15 @@ final startWithAudioProvider = StateProvider<bool>((ref) => false);
 
 final startWithVideoProvider = StateProvider<bool>((ref) => false);
 
-final callResolutionProvider = Provider<CallResolution>((ref) {
-  final currentEmission = ref.watch(currentEmissionProvider);
+final callResolutionProvider = FutureProvider<CallResolution>((ref) async {
+  final currentEmission = await ref.watch(currentEmissionProvider.future);
+  final location = ref.watch(locationProvider);
 
-  //todo: use the emission to determine the resolution
-
-  return CallResolution.HD_RESOLUTION;
+  if (currentEmission.rating <= location.veryGoodThreshold) {
+    return CallResolution.HD_RESOLUTION;
+  } else if (currentEmission.rating <= location.goodThreshold) {
+    return CallResolution.MD_RESOLUTION;
+  } else {
+    return CallResolution.LD_RESOLUTION;
+  }
 });

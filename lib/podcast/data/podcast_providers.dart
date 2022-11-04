@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_mode/core/data/carbon_aware_providers.dart';
+import 'package:green_mode/podcast/data/downloads/download.dart';
+import 'package:green_mode/podcast/data/downloads/download_database_service.dart';
 import 'package:green_mode/podcast/data/podcast_player/audio_button_state.dart';
 import 'package:green_mode/podcast/data/podcast_player/audio_player_manager.dart';
 import 'package:green_mode/podcast/data/podcast_player/audio_progress.dart';
@@ -27,3 +29,6 @@ final audioPlayerManagerProvider =
   return AudioPlayerManager(
       audioUrl: ref.watch(playingEpisodeProvider)?.contentUrl);
 });
+
+final allDownloadsProvider = FutureProvider.autoDispose<List<Download>>(
+    (ref) => DownloadDatabaseService.getAllDownloads());

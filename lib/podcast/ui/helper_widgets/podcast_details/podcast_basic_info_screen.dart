@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/content_image_loader.dart';
 import 'package:green_mode/core/common_widgets/themed_expansion_tile.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:podcast_search/podcast_search.dart';
@@ -29,12 +30,7 @@ class PodcastBasicInfoScreen extends StatelessWidget {
         // ),
 
         //image expansion tile
-        (podcast.image != null)
-            ? ThemedExpansionTile(
-                tileTitle: "View image",
-                imageUrl: podcast.image!,
-              )
-            : const SizedBox(),
+        ContentImageLoader(imageUrl: podcast.image),
 
         //desc
         const Text(

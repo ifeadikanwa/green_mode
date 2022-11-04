@@ -11,6 +11,8 @@ import 'package:green_mode/news/data/models/news.dart';
 import 'package:green_mode/news/ui/news_details/news_detail_screen.dart';
 import 'package:green_mode/news/ui/news_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:green_mode/podcast/ui/helper_widgets/downloads/dowload_queue_screen.dart';
+import 'package:green_mode/podcast/ui/helper_widgets/downloads/download_screen.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_details/podcast_details_screen.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/podcast_player_screen.dart';
 import 'package:green_mode/podcast/ui/podcast_screen.dart';
@@ -64,6 +66,12 @@ class AppRouter {
 
   static MaterialPageRoute podcastPlayerScreen(BuildContext context) =>
       MaterialPageRoute(builder: (context) => const PodcastPlayerScreen());
+
+  static MaterialPageRoute downloadScreen(BuildContext context) =>
+      MaterialPageRoute(builder: (context) => const DownloadScreen());
+
+  static MaterialPageRoute downloadQueueScreen(BuildContext context) =>
+      MaterialPageRoute(builder: (context) => const DownloadQueueScreen());
 
   static void pushAndRemoveEveryOtherScreen(
     BuildContext context,

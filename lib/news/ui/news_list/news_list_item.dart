@@ -1,3 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:green_mode/core/common_widgets/add_horizontal_space.dart';
+import 'package:green_mode/core/common_widgets/list_image_loader.dart';
+import 'package:green_mode/core/data/carbon_aware_providers.dart';
 import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
@@ -13,6 +17,8 @@ class NewsListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final canAutoLoadImages = ref.watch(canAutoLoadImageProvider);
+
     return GestureDetector(
       //on tap set news url and navigate
       onTap: () {
@@ -30,21 +36,33 @@ class NewsListItem extends ConsumerWidget {
           vertical: 12.0,
           horizontal: 8.0,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              news.title,
-              softWrap: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: WidgetConstants.listItemTitleTextStyle,
+            ListImageLoader(
+              imageHeight: 70,
+              imageWidth: 70,
+              imageUrl: news.urlToImage,
             ),
-            const AddVerticalSpace(height: 6.0),
-            Text(
-              NewsUtil.getValidDescription(news.description),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            const AddHorizontalSpace(width: 8.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    news.title,
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: WidgetConstants.listItemTitleTextStyle,
+                  ),
+                  const AddVerticalSpace(height: 6.0),
+                  Text(
+                    NewsUtil.getValidDescription(news.description),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

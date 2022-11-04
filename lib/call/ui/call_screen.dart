@@ -4,6 +4,7 @@ import 'package:green_mode/call/data/call.dart';
 import 'package:green_mode/call/data/call_providers.dart';
 import 'package:green_mode/core/common_widgets/add_horizontal_space.dart';
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
+import 'package:green_mode/core/common_widgets/loading_indicator.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/common_widgets/sub_app_bar.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
@@ -57,21 +58,26 @@ class CallScreenState extends ConsumerState<CallScreen> {
             ),
 
             //call quality indicator
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: callResolution.presentationColor,
+            callResolution.when(
+              data: (callRes) => Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: callRes.presentationColor,
+                    ),
                   ),
-                ),
-                const AddHorizontalSpace(width: 8.0),
-                Text(callResolution.presentationName),
-              ],
+                  const AddHorizontalSpace(width: 8.0),
+                  Text(callRes.presentationName),
+                ],
+              ),
+              error: (error, stackTrace) => Text(error.toString()),
+              loading: () => const LoadingIndicator(),
             ),
+
             const AddVerticalSpace(
               height: WidgetConstants.defaultVerticalWidgetSpacing,
             ),
@@ -102,7 +108,7 @@ class CallScreenState extends ConsumerState<CallScreen> {
 
             //call to action
             ElevatedButton(
-              onPressed: () async{
+              onPressed: () async {
                 await Call.joinCall(ref);
               },
               child: const Text("START CALL"),

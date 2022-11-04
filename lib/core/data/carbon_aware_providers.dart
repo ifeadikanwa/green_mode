@@ -9,6 +9,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final locationProvider = StateProvider<Location>((ref) => Location.uksouth);
 
+final canAutoLoadImageProvider = FutureProvider<bool>((ref) async {
+  final currentEmission = await ref.watch(currentEmissionProvider.future);
+
+  final location = ref.watch(locationProvider);
+
+  return currentEmission.rating <= location.veryGoodThreshold;
+});
+
 final currentEmissionProvider = FutureProvider<Emission>((ref) async {
   final location = ref.watch(locationProvider);
 
@@ -102,6 +110,6 @@ final todaysEmissionProvider = FutureProvider<List<Emission>>((ref) async {
     (a, b) =>
         a.time.millisecondsSinceEpoch.compareTo(b.time.millisecondsSinceEpoch),
   );
-  
+
   return todaysEmissionList;
 });
