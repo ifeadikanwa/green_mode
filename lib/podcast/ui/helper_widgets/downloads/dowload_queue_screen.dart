@@ -9,6 +9,9 @@ import 'package:green_mode/core/common_widgets/list_image_loader.dart';
 import 'package:green_mode/core/common_widgets/loading_indicator.dart';
 import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
+import 'package:green_mode/core/constants/widget_constants.dart';
+import 'package:green_mode/core/data/carbon_aware_providers.dart';
+import 'package:green_mode/core/data/util/time_util.dart';
 import 'package:green_mode/podcast/data/downloads/download.dart';
 import 'package:green_mode/podcast/data/downloads/download_database_service.dart';
 import 'package:green_mode/podcast/data/downloads/downloader_service.dart';
@@ -43,10 +46,13 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
     final allDownloads = ref.watch(allDownloadsProvider);
+    final bestEmissionTime = ref.watch(bestEmissionToComeTimeProvider);
 
     return ScreenContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //bar
           const InnerScreenAppBar(
@@ -55,6 +61,16 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
 
           //schedule info
           //todo: Text with info-> download is scheduled for today at x
+          bestEmissionTime.when(
+            data: (bestTime) => Text(
+              "Scheduled for ${TimeUtil.padTime(bestTime.hour)}:${TimeUtil.padTime(bestTime.minute)} ${(bestTime.hour >= 12) ? "PM" : "AM"}",
+              style: WidgetConstants.smallerSubHeadingTextStyle.copyWith(
+                color: appTheme.colorScheme.secondary,
+              ),
+            ),
+            error: (error, stackTrace) => Text(error.toString()),
+            loading: () => const LinearProgressIndicator(),
+          ),
 
           //todo: list of files to be downloaded with trailing trash button to remove/delete
           allDownloads.when(
@@ -117,16 +133,32 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
       _bindBackgroundIsolate();
       return;
     }
-    _port.listen((dynamic data) {
+    _port.listen((dynamic data) async {
       String id = data[0];
       DownloadTaskStatus status = data[1];
       int progress = data[2];
 
-      var task = downloadsListMaps.where((element) => element[DownloaderService.taskId] == id);
+      var task = downloadsListMaps
+          .where((element) => element[DownloaderService.taskId] == id);
 
       for (var element in task) {
+        print("In Port method");
+
         //if download is complete update db record
-        
+        if (status == DownloadTaskStatus.complete) {
+          print("DOWNLOAD COMPLETE");
+          Download? downloadRecord =
+              await DownloadDatabaseService.findDownloadWithFilePath(
+                  element[DownloaderService.filename]);
+
+          if (downloadRecord != null) {
+            DownloadDatabaseService.updateDownload(
+              downloadRecord.copyWith(downloaded: true),
+            );
+          }
+        }
+
+        //update local map
         element[DownloaderService.progress] = progress;
         element[DownloaderService.status] = status;
         setState(() {});

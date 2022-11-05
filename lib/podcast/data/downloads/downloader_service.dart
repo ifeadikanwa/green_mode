@@ -10,38 +10,32 @@ class DownloaderService {
   static const filename = "filename";
   static const savedDirectory = "savedDirectory";
 
-  static Future<String> getDownloadStorageLocation(String filename) async {
-    var path = await getApplicationDocumentsDirectory().then(
-      (value) => "${value.path}/downloads/${filename.replaceAll(" ", "_")}",
+  static Future<Directory> getDownloadStorageLocation() async {
+    var path = await getExternalStorageDirectory().then(
+      (value) => "${value?.path}/green_mode_downloads",
     );
 
     var downloadDir = await Directory(path).create(recursive: true);
 
+    print(downloadDir.path);
 
-    return downloadDir.path;
+    return downloadDir;
   }
 
   static void addToDownloadQueue(
       {required String episodeTitle, required String? audioUrl}) async {
     if (audioUrl != null) {
-      final String downloadStoragePath =
-          await getDownloadStorageLocation(episodeTitle);
+      final Directory downloadStoragePath = await getDownloadStorageLocation();
 
       final taskId = await FlutterDownloader.enqueue(
-        fileName: episodeTitle,
+        fileName: "${episodeTitle.trim()}.mp3",
         url: audioUrl,
-        savedDir: downloadStoragePath,
+        savedDir: downloadStoragePath.path,
         showNotification:
             true, // show download progress in status bar (for Android)
         openFileFromNotification:
             false, // click on notification to open downloaded file (for Android)
       );
     }
-  }
-
-  static Future<List<Map>> getDownloadTasks() async {
-    List<Map> downloadsListMaps = [];
-
-    return downloadsListMaps;
   }
 }

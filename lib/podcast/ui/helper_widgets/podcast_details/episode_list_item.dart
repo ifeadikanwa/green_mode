@@ -17,6 +17,7 @@ class EpisodeListItem extends ConsumerWidget {
     return ListTile(
       onTap: () {
         ref.read(playingEpisodeProvider.notifier).state = episode;
+        ref.read(episodeIsRemoteFileProvider.notifier).state = true;
         Navigator.push(
           context,
           AppRouter.podcastPlayerScreen(context),
@@ -42,7 +43,8 @@ class EpisodeListItem extends ConsumerWidget {
               audioUrl: episode.contentUrl,
               duration: episode.duration?.inMinutes,
               downloaded: false,
-              filePath: await DownloaderService.getDownloadStorageLocation(episode.title),
+              filePath:
+                  "${await DownloaderService.getDownloadStorageLocation().then((value) => value.path)}/${episode.title.trim()}.mp3",
             ),
           );
 

@@ -113,3 +113,23 @@ final todaysEmissionProvider = FutureProvider<List<Emission>>((ref) async {
 
   return todaysEmissionList;
 });
+
+final bestEmissionToComeTimeProvider =
+    FutureProvider.autoDispose<DateTime>((ref) async {
+  final daysEmissions = await ref.watch(todaysEmissionProvider.future);
+
+  final currentTime = DateTime.now();
+
+  final emissionsToCome = daysEmissions
+      .where(
+        (emission) =>
+            emission.time.hour >= currentTime.hour &&
+            emission.time.minute >= currentTime.minute,
+      )
+      .toList();
+
+  //sort in ascending order
+  emissionsToCome.sort((a, b) => a.rating.compareTo(b.rating));
+
+  return emissionsToCome.first.time;
+});

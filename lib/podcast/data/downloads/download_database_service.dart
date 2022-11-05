@@ -8,7 +8,8 @@ class DownloadDatabaseService {
 
   static const downloadTable = "download";
 
-  static const createTableQuery = '''
+  static const createTableQuery =
+      '''
     CREATE TABLE $downloadTable(
       id $idType,
       title $textType,
@@ -69,6 +70,22 @@ class DownloadDatabaseService {
     return downloadsMaps
         .map((downloadMap) => Download.fromMap(downloadMap: downloadMap))
         .toList();
+  }
+
+  static Future<Download?> findDownloadWithFilePath(String filePath) async {
+    final db = await _databaseProvider.database;
+    final downloadsMaps = await db.query(
+      downloadTable,
+      columns: Download.allColumns,
+      where: "filePath = ?",
+      whereArgs: [filePath],
+    );
+
+    if (downloadsMaps.isNotEmpty) {
+      return Download.fromMap(downloadMap: downloadsMaps.first);
+    } else {
+      return null;
+    }
   }
 
   static Future<void> updateDownload(Download download) async {

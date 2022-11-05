@@ -6,9 +6,12 @@ import 'package:just_audio/just_audio.dart';
 class AudioPlayerManager extends ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
-  AudioPlayerManager({required String? audioUrl}) {
+  AudioPlayerManager({
+    required String? audioUrl,
+    required bool isRemoteFile,
+  }) {
     if (audioUrl != null) {
-      _init(audioUrl);
+      _init(audioUrl, isRemoteFile);
     }
   }
 
@@ -20,8 +23,19 @@ class AudioPlayerManager extends ChangeNotifier {
 
   AudioButtonState audioButtonState = AudioButtonState.paused;
 
-  void _init(String audioUrl) async {
-    await _audioPlayer.setUrl(audioUrl);
+  void _init(
+    String audioUrl,
+    bool isRemoteFile,
+  ) async {
+    if (isRemoteFile) {
+      await _audioPlayer.setUrl(audioUrl);
+    } else {
+      await _audioPlayer.setFilePath(
+        audioUrl,
+        initialPosition: Duration.zero,
+        preload: true,
+      );
+    }
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
