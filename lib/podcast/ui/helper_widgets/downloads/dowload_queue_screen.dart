@@ -75,6 +75,7 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
           //todo: list of files to be downloaded with trailing trash button to remove/delete
           allDownloads.when(
             data: (allData) {
+             
               final downloads = allData
                   .where(
                     (data) => data.downloaded == false,
