@@ -1,5 +1,8 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:green_mode/core/data/carbon_aware_service.dart';
+import 'package:green_mode/core/data/constants/location.dart';
 import 'package:green_mode/core/routing/app_router.dart';
 import 'package:green_mode/podcast/data/downloads/download.dart';
 import 'package:green_mode/podcast/data/downloads/download_database_service.dart';
@@ -48,6 +51,10 @@ class EpisodeListItem extends ConsumerWidget {
             ),
           );
 
+
+
+          
+
           print(
               "Downloads: ${await DownloadDatabaseService.getAllDownloads()}");
         },
@@ -55,4 +62,6 @@ class EpisodeListItem extends ConsumerWidget {
       ),
     );
   }
+
+  
 }

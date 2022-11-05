@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,8 @@ import 'package:green_mode/core/common_widgets/screen_container.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
 import 'package:green_mode/core/data/carbon_aware_providers.dart';
+import 'package:green_mode/core/data/carbon_aware_service.dart';
+import 'package:green_mode/core/data/constants/location.dart';
 import 'package:green_mode/core/data/util/time_util.dart';
 import 'package:green_mode/podcast/data/downloads/download.dart';
 import 'package:green_mode/podcast/data/downloads/download_database_service.dart';
@@ -62,12 +65,20 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
           //schedule info
           //todo: Text with info-> download is scheduled for today at x
           bestEmissionTime.when(
-            data: (bestTime) => Text(
-              "Scheduled for ${TimeUtil.padTime(bestTime.hour)}:${TimeUtil.padTime(bestTime.minute)} ${(bestTime.hour >= 12) ? "PM" : "AM"}",
-              style: WidgetConstants.smallerSubHeadingTextStyle.copyWith(
-                color: appTheme.colorScheme.secondary,
-              ),
-            ),
+            data: (bestTime) {
+              AndroidAlarmManager.oneShotAt(
+               bestTime,
+                1,
+                addToDownloadQueue,
+              );
+
+              return Text(
+                "Scheduled for ${TimeUtil.padTime(bestTime.hour)}:${TimeUtil.padTime(bestTime.minute)} ${(bestTime.hour >= 12) ? "PM" : "AM"}",
+                style: WidgetConstants.smallerSubHeadingTextStyle.copyWith(
+                  color: appTheme.colorScheme.secondary,
+                ),
+              );
+            },
             error: (error, stackTrace) => Text(error.toString()),
             loading: () => const LinearProgressIndicator(),
           ),
@@ -75,7 +86,6 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
           //todo: list of files to be downloaded with trailing trash button to remove/delete
           allDownloads.when(
             data: (allData) {
-             
               final downloads = allData
                   .where(
                     (data) => data.downloaded == false,
@@ -88,14 +98,14 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
                       final Download download = downloads[index];
                       return ListTile(
                         title: Text(download.title),
-                        trailing: IconButton(
-                            onPressed: () {
-                              DownloaderService.addToDownloadQueue(
-                                episodeTitle: download.title,
-                                audioUrl: download.audioUrl,
-                              );
-                            },
-                            icon: const Icon(Icons.download)),
+                        // trailing: IconButton(
+                        //     onPressed: () {
+                        //       DownloaderService.addToDownloadQueue(
+                        //         episodeTitle: download.title,
+                        //         audioUrl: download.audioUrl,
+                        //       );
+                        //     },
+                        //     icon: const Icon(Icons.download)),
                       );
                     },
                     separatorBuilder: (context, index) => const ThemedDivider(),
@@ -177,5 +187,41 @@ class DownloadQueueScreenState extends ConsumerState<DownloadQueueScreen> {
 
   void _unbindBackgroundIsolate() {
     IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  static void scheduleNextDownload() async {
+    final bestEmissionTime = await CarbonAwareService.getBestEmissionTime(
+      Location.uksouth,
+    );
+
+    AndroidAlarmManager.oneShotAt(
+      DateTime.now().add(
+        const Duration(
+          seconds: 5,
+        ),
+      ),
+      1,
+      addToDownloadQueue,
+    );
+  }
+
+  @pragma('vm:entry-point')
+  static void addToDownloadQueue() async {
+    // await FlutterDownloader.initialize(
+    //   debug: true,
+    //   ignoreSsl: true,
+    // );
+
+    final downloads = await DownloadDatabaseService.getAllDownloads();
+
+    final notDownloadedList =
+        downloads.where((element) => element.downloaded == false);
+
+    for (var download in notDownloadedList) {
+      DownloaderService.addToDownloadQueue(
+        episodeTitle: download.title,
+        audioUrl: download.audioUrl,
+      );
+    }
   }
 }

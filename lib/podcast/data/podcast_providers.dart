@@ -57,9 +57,11 @@ final downloadedPodcastsProvider =
       final Download? download =
           await DownloadDatabaseService.findDownloadWithFilePath(path);
       if (download != null) {
-        await DownloadDatabaseService.updateDownload(
-          download.copyWith(downloaded: true),
-        );
+        if (!download.downloaded) {
+          await DownloadDatabaseService.updateDownload(
+            download.copyWith(downloaded: true),
+          );
+        }
         podcasts.add(DownloadPair(
           file: entity,
           download: download,

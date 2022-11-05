@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:green_mode/core/common_widgets/add_vertical_space.dart';
@@ -8,14 +9,21 @@ import 'package:green_mode/core/common_widgets/sub_app_bar.dart';
 import 'package:green_mode/core/common_widgets/themed_divider.dart';
 import 'package:green_mode/core/constants/text_constants.dart';
 import 'package:green_mode/core/constants/widget_constants.dart';
+import 'package:green_mode/core/data/carbon_aware_service.dart';
+import 'package:green_mode/core/data/constants/location.dart';
 import 'package:green_mode/core/routing/app_router.dart';
+import 'package:green_mode/podcast/data/downloads/download_database_service.dart';
+import 'package:green_mode/podcast/data/downloads/downloader_service.dart';
 import 'package:green_mode/podcast/data/podcast_providers.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_list/podcast_list_screen.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_player/mini_podcast_player.dart';
 import 'package:green_mode/podcast/ui/helper_widgets/podcast_search_delegate.dart';
 
 class PodcastScreen extends ConsumerWidget {
+
+
   const PodcastScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,4 +99,6 @@ class PodcastScreen extends ConsumerWidget {
       loading: () => const LoadingIndicator(),
     );
   }
+
+  
 }

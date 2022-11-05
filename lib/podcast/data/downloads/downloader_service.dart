@@ -22,6 +22,7 @@ class DownloaderService {
     return downloadDir;
   }
 
+  @pragma('vm:entry-point')
   static void addToDownloadQueue(
       {required String episodeTitle, required String? audioUrl}) async {
     if (audioUrl != null) {
