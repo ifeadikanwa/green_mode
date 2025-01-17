@@ -1,4 +1,15 @@
 # green_mode
+Green mode is a carbon aware-by-default super application that empowers users to embrace a greener digital experience. 
+
+It is a one-stop app containing mini applications that allow the user to perform various activities like audio and video calling, podcast streaming and downloading, reading the news and deciding when to perform energy intensive tasks. 
+
+It uses carbon aware knowledge to inform its behavior and shape the user experience so it does more when the energy is clean and less when the energy is dirty.
+
+Current Features
+- Video and Audio Calls
+- News
+- Podcasts
+- Green scheduler
 
 
 # Images
